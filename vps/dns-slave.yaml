@@ -1,4 +1,5 @@
 version: "3.6"
+
 services:
   external-resolver:
     image: "docker.io/alpinelinux/unbound:latest"
@@ -7,6 +8,7 @@ services:
     networks:
       internal-net:
         ipv4_address: 172.18.2.2
+      external-net:
     restart: "unless-stopped"
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
@@ -14,7 +16,7 @@ services:
     working_dir: "/etc/unbound"
 
 volumes:
-  dns-external-resolver-unbound:
+  external-resolver-unbound:
 
 networks:
   internal-net:
@@ -23,3 +25,9 @@ networks:
     ipam:
       config:
         - subnet: 172.18.2.0/29
+  external-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.17.31.8/29        
