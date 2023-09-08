@@ -7,7 +7,6 @@ services:
     networks:
       internal-net:
         ipv4_address: 172.18.2.2
-      dns-external-resolver:
     restart: "unless-stopped"
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
