@@ -12,7 +12,7 @@ services:
     restart: "unless-stopped"
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
-      - "dns-external-resolver-unbound:/etc/unbound"
+      - "external-resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
 volumes:
