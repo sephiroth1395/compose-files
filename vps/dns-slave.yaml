@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+  external-resolver:
+    image: "docker.io/alpinelinux/unbound:latest"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"    
+    networks:
+      internal-net:
+        ipv4_address: 172.18.2.2
+      dns-external-resolver:
+    restart: "unless-stopped"
+    volumes:
+      - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
+      - "dns-external-resolver-unbound:/etc/unbound"
+    working_dir: "/etc/unbound"
+
+volumes:
+  dns-external-resolver-unbound:
+
+networks:
+  internal-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.18.2.0/29
