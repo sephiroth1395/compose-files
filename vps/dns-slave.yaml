@@ -34,11 +34,13 @@ services:
     restart: "unless-stopped"
     volumes:
       - "auth-slave-pdns:/etc/powerdns/pdns.d"
+      - "auth-slave-sqlite:/var/lib/powerdns"
     working_dir: "/etc/powerdns"
 
 volumes:
   external-resolver-unbound:
   auth-slave-pdns:
+  auth-slave-sqlite:
   
 networks:
   internal-net:
