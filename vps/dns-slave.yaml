@@ -15,6 +15,7 @@ services:
     restart: "unless-stopped"
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
+      - "/etc/ssl/certs/ca-certificates.crt:/etc/unbound/ca-certificates.crt"
       - "external-resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
