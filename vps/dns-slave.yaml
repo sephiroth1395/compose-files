@@ -20,8 +20,25 @@ services:
       - "external-resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
+  external-resolver:
+    image: "docker.io/powerdns/pdns-auth-48:latest"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+    networks:
+      internal-net:
+        ipv4_address: 172.18.2.3
+      external-net:
+        ipv4_address: 172.17.31.11
+    ports:
+      - "127.0.0.1:5353:53/udp"
+    restart: "unless-stopped"
+    volumes:
+      - "auth-slave-pdns:/etc/powerdns/pdns.d"
+    working_dir: "/etc/powerdns"
+
 volumes:
   external-resolver-unbound:
+  auth-slave-pdns:
   
 networks:
   internal-net:
