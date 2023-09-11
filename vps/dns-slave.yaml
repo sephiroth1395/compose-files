@@ -30,7 +30,10 @@ services:
       external-net:
         ipv4_address: 172.17.31.11
     ports:
-      - "127.0.0.1:5353:53/udp"
+      - "172.16.1.2:53:53/tcp"
+      - "fd00:470:780b:1::2:53:53/tcp"
+      - "172.16.1.2:53:53/udp"
+      - "fd00:470:780b:1::2:53:53/udp"      
     restart: "unless-stopped"
     volumes:
       - "auth-slave-pdns:/etc/powerdns/pdns.d"
