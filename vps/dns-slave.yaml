@@ -20,7 +20,7 @@ services:
       - "external-resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
-  external-resolver:
+  auth-slave:
     image: "docker.io/powerdns/pdns-auth-48:latest"
     labels:
       com.centurylinklabs.watchtower.enable: "true"
