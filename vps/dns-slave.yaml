@@ -12,7 +12,7 @@ services:
       external-net:
         ipv4_address: 172.17.31.10
     ports:
-      - "127.0.0.1:9991:53/udp"
+      - "127.0.0.1:53:53/udp"
     restart: "unless-stopped"
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
