@@ -20,24 +20,8 @@ services:
       - "external-resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
-  recursor:
-    image: "powerdns/pdns-recursor-49"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
-    networks:
-      internal-net:
-        ipv4_address: 172.18.2.3
-      external-net:
-        ipv4_address: 172.17.31.11
-    ports:
-      - "127.0.0.1:53:53/udp"
-    restart: "unless-stopped"
-    volumes:
-      - "recursor-pdns:/etc/powerdns/recursor.d" 
-
 volumes:
   external-resolver-unbound:
-  recursor-pdns:
   
 networks:
   internal-net:
