@@ -26,6 +26,24 @@ services:
       - "resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
+  auth-server:
+    environment:
+      - "TZ=Europe/Brussels"
+    image: "docker.io/ubuntu/bind9:latest"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+    networks:
+      # Communication with auth-parser and resolver
+      internal-net:
+        ipv4_address: 172.18.2.3
+      # Notify and AXFR with master server
+      external-net:
+    restart: "unless-stopped"
+    volumes:
+      - "auth-server-cache:/var/cache/bind"
+      - "auth-server-etc:/etc/bind"
+      - "auth-server-lib:/var/lib/bind"
+
   auth-receiver:
     environment:
       - "TZ=Europe/Brussels"
@@ -55,24 +73,6 @@ services:
     volumes:
       - "auth-receiver:/app/uploads"
       - "auth-server-lib:/app/zones"
-
-  auth-server:
-    environment:
-      - "TZ=Europe/Brussels"
-    image: "docker.io/ubuntu/bind9:latest"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
-    networks:
-      # Communication with auth-parser and resolver
-      internal-net:
-        ipv4_address: 172.18.2.3
-      # Notify and AXFR with master server
-      external-net:
-    restart: "unless-stopped"
-    volumes:
-      - "auth-server-cache:/var/cache/bind"
-      - "auth-server-etc:/etc/bind"
-      - "auth-server-lib:/var/lib/bind"
 
 
 volumes: 
