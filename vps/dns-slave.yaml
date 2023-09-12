@@ -38,6 +38,7 @@ services:
         ipv4_address: 172.18.2.3
       # Notify and AXFR with master server
       external-net:
+        ipv4_address: 172.17.31.11
     restart: "unless-stopped"
     volumes:
       - "auth-server-cache:/var/cache/bind"
@@ -54,6 +55,7 @@ services:
     networks:
       # Receive files through HTTP server
       external-net:
+        ipv4_address: 172.17.31.12
     ports:
       - "127.0.0.1:8090:8080/tcp"
     restart: "unless-stopped"
@@ -69,6 +71,7 @@ services:
     networks:
       # rndc queries to auth-server to trigger restart after zone updates
       internal-net:
+        ipv4_address: 172.18.2.4
     restart: "unless-stopped"
     volumes:
       - "auth-receiver:/app/uploads"
