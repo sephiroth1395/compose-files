@@ -62,7 +62,6 @@ services:
     restart: "unless-stopped"
     volumes:
       - "auth-receiver:/uploads"
-      - "/var/lib/docker/localfiles/dns_auth-receiver/slave-zone-template:/app/slave-zone-template"
 
   auth-parser:
     environment:
@@ -78,6 +77,7 @@ services:
     volumes:
       - "auth-receiver:/app/uploads"
       - "auth-server-zones:/app/zones"
+      - "/var/lib/docker/localfiles/dns_auth-receiver/slave-zone-template:/app/slave-zone-template"
 
 
 volumes: 
