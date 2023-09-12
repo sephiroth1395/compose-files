@@ -2,14 +2,20 @@ version: "3.6"
 
 services:
 
-  external-resolver:
+  resolver:
+    environment:
+      - "TZ=Europe/Brussels"
     image: "docker.io/alpinelinux/unbound:latest"
     labels:
       com.centurylinklabs.watchtower.enable: "true"
+    # Static IP address on both interfaces because unbound doesn't support
+    # interface-based binding 
     networks:
+      # Link with Bind for DNS requests 
       internal-net:
         ipv4_address: 172.18.2.2
-      external-net:
+      # Receive queries from endpoints, perform DoH requests
+      external-net:   
         ipv4_address: 172.17.31.10
     ports:
       - "127.0.0.1:53:53/udp"
@@ -17,34 +23,66 @@ services:
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
       - "/etc/ssl/certs/ca-certificates.crt:/etc/unbound/ca-certificates.crt"
-      - "external-resolver-unbound:/etc/unbound"
+      - "resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
-  auth-slave:
-    image: "docker.io/powerdns/pdns-auth-48:latest"
+  auth-receiver:
+    environment:
+      - "TZ=Europe/Brussels"
+      - "UPLOAD_DIR=/uploads"
+    image: "ghcr.io/sephiroth1395/http-server-upload:main"
     labels:
       com.centurylinklabs.watchtower.enable: "true"
     networks:
-      internal-net:
-        ipv4_address: 172.18.2.3
+      # Receive files through HTTP server
       external-net:
-        ipv4_address: 172.17.31.11
     ports:
-      - "172.16.1.2:5353:53/tcp"
-      - "[fd00:470:780b:1::2]:5353:53/tcp"
-      - "172.16.1.2:5353:53/udp"
-      - "[fd00:470:780b:1::2]:5353:53/udp"
+      - "127.0.0.1:8090:8080/tcp"
     restart: "unless-stopped"
     volumes:
-      - "auth-slave-pdns:/etc/powerdns/pdns.d"
-      - "auth-slave-sqlite:/var/lib/powerdns"
-    working_dir: "/etc/powerdns"
+      - "auth-receiver:/uploads"
 
-volumes:
-  external-resolver-unbound:
-  auth-slave-pdns:
-  auth-slave-sqlite:
-  
+  auth-parser:
+    environment:
+      - "TZ=Europe/Brussels"
+    image: "ghcr.io/sephiroth1395/dns-zone-list-parser:main"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+    networks:
+      # rndc queries to auth-server to trigger restart after zone updates
+      internal-net:
+    restart: "unless-stopped"
+    volumes:
+      - "auth-receiver:/app/uploads"
+      - "auth-server-lib:/app/zones"
+
+  auth-server:
+    environment:
+      - "TZ=Europe/Brussels"
+    image: "docker.io/ubuntu/bind9:latest"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+    networks:
+      # Communication with auth-parser and resolver
+      internal-net:
+        ipv4_address: 172.18.2.3
+      # Notify and AXFR with master server
+      external-net:
+    restart: "unless-stopped"
+    volumes:
+      - "auth-server-cache:/var/cache/bind"
+      - "auth-server-etc:/etc/bind"
+      - "auth-server-lib:/var/lib/bind"
+
+
+volumes: 
+  resolver-unbound:
+  auth-receiver:
+  auth-server-cache:
+  auth-server-etc:
+  auth-server-lib:
+
+
 networks:
   internal-net:
     driver: bridge
