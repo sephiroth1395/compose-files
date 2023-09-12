@@ -43,6 +43,7 @@ services:
     volumes:
       - "auth-server-cache:/var/cache/bind"
       - "auth-server-etc:/etc/bind"
+      - "auth-server-zones:/etc/bind/zones"
       - "auth-server-lib:/var/lib/bind"
 
   auth-receiver:
@@ -75,7 +76,7 @@ services:
     restart: "unless-stopped"
     volumes:
       - "auth-receiver:/app/uploads"
-      - "auth-server-lib:/app/zones"
+      - "auth-server-zones:/app/zones"
 
 
 volumes: 
@@ -83,6 +84,7 @@ volumes:
   auth-receiver:
   auth-server-cache:
   auth-server-etc:
+  auth-server-zones:
   auth-server-lib:
 
 
