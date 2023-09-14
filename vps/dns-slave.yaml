@@ -18,7 +18,7 @@ services:
       external-net:   
         ipv4_address: 172.17.31.10
     ports:
-      - "127.0.0.1:53:53/udp"
+      - "53:53/udp"
     restart: "unless-stopped"
     volumes:
       - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
@@ -39,6 +39,8 @@ services:
       # Notify and AXFR with master server
       external-net:
         ipv4_address: 172.17.31.11
+    ports:
+      - "5353:53/udp"
     restart: "unless-stopped"
     volumes:
       - "auth-server-cache:/var/cache/bind"
