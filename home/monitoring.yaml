@@ -35,4 +35,4 @@ networks:
     internal: true
     ipam:
       config:
-        - subnet: 172.17.41.10/31  
+        - subnet: 172.17.41.24/30  
