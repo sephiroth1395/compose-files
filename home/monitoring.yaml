@@ -1,5 +1,3 @@
-version: "3.6"
-
 # ntfy.sh based on reference compose from official documentation
 
 services:
