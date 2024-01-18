@@ -29,7 +29,6 @@ volumes:
 networks:
   ntfy:
     driver: bridge
-    internal: true
     ipam:
       config:
         - subnet: 172.17.41.24/30  
