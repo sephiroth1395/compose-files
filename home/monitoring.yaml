@@ -7,7 +7,7 @@ services:
     image: binwiederhier/ntfy
     container_name: ntfy
     command:
-      - serve
+      - [ "serve", "-c", "/etc/ntfy/server.yml" ]
     environment:
       - TZ=Europe/Brussels
     volumes:
