@@ -1,0 +1,28 @@
+services:
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - deluge-config:/config
+      - /srv/media/Downloads:/downloads
+    ports:
+      - 127.0.0.1:8112:8112/tcp
+      - 6881:6881
+      - 6881:6881/udp
+      - 58846:58846 #optional
+    restart: unless-stopped
+
+volumes: 
+  deluge-config:
+
+networks:
+  download:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.42.0/28  
