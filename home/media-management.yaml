@@ -50,9 +50,27 @@ services:
     networks:
       captcha:    
 
+  mylar:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - mylar-config:/config
+      - /srv/media/Comics:/comics
+      - /srv/media/Downloads:/downloads
+    ports:
+      - 127.0.0.1:8090:8090/tcp
+    restart: unless-stopped
+    networks:
+      download:    
+
 volumes: 
   deluge-config:
   prowlarr-config:
+  mylar-config:
 
 networks:
   download:
