@@ -67,10 +67,28 @@ services:
     networks:
       download:    
 
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - radarr-config:/config
+      - /srv/media/Videos/Movies:/movies
+      - /srv/media/Downloads/Complete:/downloads
+    ports:
+      - 127.0.0.1:7878:7878/tcp
+    restart: unless-stopped
+    networks:
+      download: 
+
 volumes: 
   deluge-config:
   prowlarr-config:
   mylar-config:
+  radarr-config:
 
 networks:
   download:
@@ -82,4 +100,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.42.16/29          
+        - subnet: 172.17.42.16/29
