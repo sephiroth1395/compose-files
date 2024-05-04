@@ -130,7 +130,7 @@ services:
       - /srv/media/eBooks/Tracked:/books 
       - /srv/media/Downloads/Complete:/downloads
     ports:
-      - 8787:8787
+      - 127.0.0.1:8787:8787/tcp
     restart: unless-stopped
     networks:
       download: 
