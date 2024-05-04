@@ -116,8 +116,24 @@ services:
       - 127.0.0.1:8686:8686/tcp
     restart: unless-stopped
     networks:
-      download:     
+      download: 
 
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - /readarr-config:/config
+      - /srv/media/eBooks/Tracked:/books 
+      - /srv/media/Downloads/Complete:/downloads
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+    networks:
+      download: 
 
 volumes: 
   deluge-config:
@@ -126,6 +142,7 @@ volumes:
   radarr-config:
   sonarr-config:
   lidarr-config:
+  readarr-config:
 
 networks:
   download:
