@@ -1,0 +1,25 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - homarr-configs:/app/data/configs
+      - homarr-icons:/app/public/icons
+      - homarr-data:/data
+    ports:
+      - 127.0.0.1:7575:7575/tcp
+    networks:
+      homarr:
+
+volumes: 
+  homarr-configs:
+  homarr-icons:
+  homarr-data:
+
+networks:
+  homarr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.41.28/30  
