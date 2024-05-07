@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: paperless
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}      
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -41,6 +41,9 @@ services:
       USERMAP_UID: 1000
       USERMAP_GID: 100
       PAPERLESS_TIME_ZONE: Europe/Brussels
+      PAPERLESS_URL: ${PAPERLESS_URL}
+      PAPERLESS_USE_X_FORWARD_HOST: True
+      PAPERLESS_USE_X_FORWARD_PORT: True
     networks:
       net:
 
