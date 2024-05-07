@@ -17,6 +17,10 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       net: 
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}      
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
