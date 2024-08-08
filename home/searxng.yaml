@@ -1,0 +1,21 @@
+services:
+  homarr:
+    container_name: searxng
+    image: searxng/searxng
+    restart: unless-stopped
+    volumes:
+      - searxng-config:/etc/searxng
+    ports:
+      - 127.0.0.1:8087:8080/tcp
+    networks:
+      homarr:
+
+volumes: 
+  searxng-config:
+
+networks:
+  searxng:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.41.40/30  
