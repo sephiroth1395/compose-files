@@ -76,13 +76,13 @@ services:
       - "action.auto_create_index=false"
       - "plugins.security.ssl.http.enabled=false"
       - "plugins.security.disabled=true"
-    ulimits:
-      memlock:
-        hard: -1
-        soft: -1
-      nofile:
-        soft: 65536
-        hard: 65536
+#    ulimits:
+#      memlock:
+#        hard: -1
+#        soft: -1
+#      nofile:
+#        soft: 65536
+#        hard: 65536
     deploy:
       resources:
         limits:
