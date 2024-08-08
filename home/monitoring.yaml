@@ -28,6 +28,7 @@ services:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
 #      - GF_AUTH_ANONYMOUS_ENABLED=true
 #      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - TZ=Europe/Brussels
     volumes:
       - grafana-config:/etc/grafana
       - grafana-data:/var/lib/grafana
@@ -58,6 +59,7 @@ services:
       - "plugins.security.ssl.http.enabled=false"
       - "plugins.security.disabled=true"
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+      - TZ=Europe/Brussels
 #    ulimits:
 #      memlock:
 #        hard: -1
@@ -84,6 +86,7 @@ services:
       - GRAYLOG_MONGODB_URI=mongodb://monitoring-mongodb-1.monitoring_graylog:27017/graylog
       - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
       - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
+      - TZ=Europe/Brussels
     entrypoint: /usr/bin/tini -- wait-for-it monitoring-opensearch-graylog-1.monitoring_graylog:9200 --  /docker-entrypoint.sh
     networks:
         - graylog
