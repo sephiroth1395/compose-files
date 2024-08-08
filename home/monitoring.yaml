@@ -23,25 +23,6 @@ services:
     networks:
       ntfy:
 
-  loki:
-    image: grafana/loki:2.9.2
-    ports:
-      - "127.0.0.1:3100:3100/tcp"
-#    command: -config.file=/etc/loki/local-config.yaml
-    volumes:
-      - loki-config:/etc/loki
-      - /loki:/loki
-    networks:
-      - grafana
-
-#  promtail:
-#    image: grafana/promtail:2.9.2
-#    volumes:
-#      - /var/log:/var/log
-#    command: -config.file=/etc/promtail/config.yml
-#    networks:
-#      - grafana
-
   grafana:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
@@ -74,14 +55,45 @@ services:
       - "127.0.0.1:3001:3000/tcp"
     networks:
       - grafana
+      - graylog
 
+  mongodb:
+    image: "mongo:6.0.14"
+    volumes:
+      - "mongodb-data:/data/db"
+    restart: "on-failure"
+    networks:
+      - graylog
+
+  opensearch-graylog:
+    image: "opensearchproject/opensearch:2.12.0"
+    volumes:
+      - /monitoring/opensearch-data:/usr/share/opensearch/data    
+    environment:
+      - "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g"
+      - "bootstrap.memory_lock=true"
+      - "discovery.type=single-node"
+      - "action.auto_create_index=false"
+      - "plugins.security.ssl.http.enabled=false"
+      - "plugins.security.disabled=true"
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+      mem_limit: 2g
+    restart: "on-failure"
+    networks:
+        - graylog
 
 volumes: 
   ntfy-cache:
   ntfy-config:
-  loki-config:
   grafana-config:
   grafana-data:
+  mongodb-data:
 
 networks:
   ntfy:
@@ -93,5 +105,9 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.43.16/29  
-
+        - subnet: 172.17.43.16/29
+  grafana:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.43.24/29
