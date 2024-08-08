@@ -75,7 +75,7 @@ services:
   graylog:
     image: graylog/graylog:6.0
     volumes:
-      - graylog_data:/usr/share/graylog/data
+      - graylog-data:/usr/share/graylog/data
     environment:
       - GRAYLOG_HTTP_EXTERNAL_URI=https://graylog.srv.ev1z.be:9000/
     entrypoint: /usr/bin/tini -- wait-for-it opensearch-graylog.monitoring_graylog:9200 --  /docker-entrypoint.sh
