@@ -1,24 +1,20 @@
 services:
-  homarr:
-    container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
+  homepage:
+    container_name: homepage
+    image: ghcr.io/gethomepage/homepage:latest
     restart: unless-stopped
     volumes:
-      - homarr-configs:/app/data/configs
-      - homarr-icons:/app/public/icons
-      - homarr-data:/data
+      - homepage-config:/app/config
     ports:
-      - 127.0.0.1:7575:7575/tcp
+      - 127.0.0.1:7575:3000/tcp
     networks:
-      homarr:
+      homepage:
 
 volumes: 
-  homarr-configs:
-  homarr-icons:
-  homarr-data:
+  homepage-config:
 
 networks:
-  homarr:
+  homepage:
     driver: bridge
     ipam:
       config:
