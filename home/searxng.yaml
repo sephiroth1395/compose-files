@@ -9,6 +9,14 @@ services:
       - 127.0.0.1:8087:8080/tcp
     networks:
       searxng:
+  morty:
+    container_name: morty
+    image: dalf/morty
+    restart: unless-stopped
+    environment:
+      - MORTY_KEY=${MORTY_KEY}    
+    networks:
+      searxng:
 
 volumes: 
   searxng-config:
@@ -18,4 +26,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.41.40/30  
+        - subnet: 172.17.41.40/29
