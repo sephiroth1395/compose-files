@@ -80,8 +80,8 @@ services:
       - graylog-data:/usr/share/graylog/data
     environment:
       - GRAYLOG_HTTP_EXTERNAL_URI=https://graylog.srv.ev1z.be:9000/
-      - GRAYLOG_ELASTICSEARCH_HOSTS=http://monitoring-opensearch-graylog-1:9200
-      - GRAYLOG_MONGODB_URI= "mongodb://monitoring-mongodb-1.monitoring_graylog:27017/graylog"
+      - GRAYLOG_ELASTICSEARCH_HOSTS=http://monitoring-opensearch-graylog-1.monitoring_graylog:9200
+      - GRAYLOG_MONGODB_URI=mongodb://monitoring-mongodb-1.monitoring_graylog:27017/graylog
       - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
       - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
     entrypoint: /usr/bin/tini -- wait-for-it monitoring-opensearch-graylog-1.monitoring_graylog:9200 --  /docker-entrypoint.sh
