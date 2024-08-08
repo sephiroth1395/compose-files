@@ -42,9 +42,9 @@ services:
 #    networks:
 #      - grafana
 
-#  grafana:
-#    environment:
-#      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
 #      - GF_AUTH_ANONYMOUS_ENABLED=true
 #      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
 #    entrypoint:
@@ -66,17 +66,22 @@ services:
 #          editable: false
 #        EOF
 #        /run.sh
-#    image: grafana/grafana:latest
-#    ports:
-#      - "3000:3000"
-#    networks:
-#      - loki
+    volumes:
+      - grafana-config:/etc/grafana
+      - grafana-data:/var/lib/grafana
+    image: grafana/grafana:latest
+    ports:
+      - "127.0.0.1:3001:3000/tcp"
+    networks:
+      - grafana
 
 
 volumes: 
   ntfy-cache:
   ntfy-config:
   loki-config:
+  grafana-config:
+  grafana-data:
 
 networks:
   ntfy:
