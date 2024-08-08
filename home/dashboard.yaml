@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     volumes:
       - homepage-config:/app/config
+      - homepage-images:/app/public/images
     ports:
       - 127.0.0.1:7575:3000/tcp
     networks:
@@ -12,6 +13,7 @@ services:
 
 volumes: 
   homepage-config:
+  homepage-images:
 
 networks:
   homepage:
