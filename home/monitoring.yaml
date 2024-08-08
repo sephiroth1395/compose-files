@@ -30,6 +30,7 @@ services:
 #    command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - loki-config:/etc/loki
+      - /loki:/loki
     networks:
       - grafana
 
