@@ -106,7 +106,7 @@ networks:
     ipam:
       config:
         - subnet: 172.17.43.16/29
-  grafana:
+  graylog:
     driver: bridge
     ipam:
       config:
