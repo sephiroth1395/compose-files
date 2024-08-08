@@ -1,5 +1,5 @@
 services:
-  homarr:
+  searxng:
     container_name: searxng
     image: searxng/searxng
     restart: unless-stopped
