@@ -8,7 +8,7 @@ services:
     ports:
       - 127.0.0.1:8087:8080/tcp
     networks:
-      homarr:
+      searxng:
 
 volumes: 
   searxng-config:
