@@ -135,7 +135,6 @@ services:
     networks:
       download: 
 
-services:
   lidify:
     image: thewicklowwolf/lidify:latest
     container_name: lidify
