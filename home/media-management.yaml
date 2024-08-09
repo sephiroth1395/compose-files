@@ -135,6 +135,21 @@ services:
     networks:
       download: 
 
+services:
+  lidify:
+    image: thewicklowwolf/lidify:latest
+    container_name: lidify
+    volumes:
+      - lidify-config:/lidify/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Europe/Brussels      
+    ports:
+      - 127.0.0.1:5000:5000/tcp
+    restart: unless-stopped
+    networks:
+      download: 
+
 volumes: 
   deluge-config:
   prowlarr-config:
@@ -143,6 +158,7 @@ volumes:
   sonarr-config:
   lidarr-config:
   readarr-config:
+  lidify-config:
 
 networks:
   download:
