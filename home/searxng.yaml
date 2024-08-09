@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     environment:
       - MORTY_KEY=${MORTY_KEY}
-      - MORTY_ADDRESS="0.0.0.0:3000"
+      - MORTY_ADDRESS=0.0.0.0:3000
     ports:
       - 127.0.0.1:8090:3000/tcp      
     networks:
