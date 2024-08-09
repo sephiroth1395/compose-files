@@ -126,7 +126,7 @@ services:
       - PGID=1000
       - TZ=Europe/Brussels
     volumes:
-      - /readarr-config:/config
+      - readarr-config:/config
       - /srv/media/eBooks/Tracked:/books 
       - /srv/media/Downloads/Complete:/downloads
     ports:
