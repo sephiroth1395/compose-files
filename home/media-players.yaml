@@ -1,0 +1,20 @@
+services:
+
+  navidrome:
+    image: deluan/navidrome:latest
+    ports:
+      - 127.0.0.1:4533:4533/tcp
+    restart: unless-stopped
+    volumes:
+      - navidrome-data:/data
+      - "/srv/media/Musique:/music:ro"
+
+volumes: 
+  navidrome-data:
+
+networks:
+  players:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.64.0/28  
