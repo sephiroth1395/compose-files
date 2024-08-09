@@ -5,9 +5,13 @@ services:
     ports:
       - 127.0.0.1:4533:4533/tcp
     restart: unless-stopped
+    environment:
+      - TZ=Europe/Brussels    
     volumes:
       - navidrome-data:/data
       - "/srv/media/Musique:/music:ro"
+    networks:
+      players:       
 
 volumes: 
   navidrome-data:
@@ -17,4 +21,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.42.64/28  
+        - subnet: 172.17.42.64/28
