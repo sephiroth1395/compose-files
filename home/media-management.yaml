@@ -139,7 +139,7 @@ services:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
     ports:
-      - 127.0.0.1:9090:80/tco
+      - 127.0.0.1:9090:80/tcp
     volumes:
       - /srv/media/Audiobooks:/audiobooks
       - /srv/media/Podcasts:/podcasts
