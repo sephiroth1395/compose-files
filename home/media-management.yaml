@@ -135,6 +135,23 @@ services:
     networks:
       download: 
 
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    ports:
+      - 127.0.0.1:9090:80/tco
+    volumes:
+      - /srv/media/Audiobooks:/audiobooks
+      - /srv/media/Podcasts:/podcasts
+      - audiobookshelf-config:/config
+      - audiobookshelf-metadata:/metadata
+    environment:
+      - TZ=Europe/Brussels
+    restart: unless-stopped
+    networks:
+      download: 
+
+
 volumes: 
   deluge-config:
   prowlarr-config:
@@ -143,6 +160,8 @@ volumes:
   sonarr-config:
   lidarr-config:
   readarr-config:
+  audiobookshelf-config:
+  audiobookshelf-metadata:
 
 networks:
   download:
