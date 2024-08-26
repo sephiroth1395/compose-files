@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+	deemix:
+		image: registry.gitlab.com/bockiii/deemix-docker
+		container_name: deemix
+		volumes:
+			- /srv/media/Downloads/Complete:/downloads
+			- deemix-config:/config
+		environment:
+			- PUID=1000
+			- PGID=1000
+			- UMASK_SET=022
+			- DEEMIX_SINGLE_USER=true
+      - TZ=Europe/Brussels          
+    restart: unless-stopped
+		ports:
+			- 127.0.0.1:6595:6595/tcp
+
+volumes: 
+  deemix-config:
+
+networks:
+  deemix:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.42.24/29  
