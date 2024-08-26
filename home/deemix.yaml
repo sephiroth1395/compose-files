@@ -1,9 +1,9 @@
 services:
   deemix:
     image: registry.gitlab.com/bockiii/deemix-docker
-		container_name: deemix
-		volumes:
-			- /srv/media/Downloads/Complete:/downloads
+    container_name: deemix
+    volumes:
+      - /srv/media/Downloads/Complete:/downloads
 			- deemix-config:/config
 		environment:
 			- PUID=1000
