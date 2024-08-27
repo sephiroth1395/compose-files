@@ -11,6 +11,7 @@ services:
       test: pg_isready -U libretime
     networks:
       libretime:
+    restart: unless-stopped      
 
   rabbitmq:
     image: rabbitmq:3.13-alpine
@@ -23,6 +24,7 @@ services:
       test: nc -z 127.0.0.1 5672
     networks:
       libretime:
+    restart: unless-stopped      
 
   playout:
     image: ghcr.io/libretime/libretime-playout:${LIBRETIME_VERSION:-latest}
@@ -39,6 +41,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   liquidsoap:
     image: ghcr.io/libretime/libretime-playout:${LIBRETIME_VERSION:-latest}
@@ -59,6 +62,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   analyzer:
     image: ghcr.io/libretime/libretime-analyzer:${LIBRETIME_VERSION:-latest}
@@ -75,6 +79,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   worker:
     image: ghcr.io/libretime/libretime-worker:${LIBRETIME_VERSION:-latest}
@@ -90,6 +95,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   api:
     image: ghcr.io/libretime/libretime-api:${LIBRETIME_VERSION:-latest}
@@ -106,6 +112,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   legacy:
     image: ghcr.io/libretime/libretime-legacy:${LIBRETIME_VERSION:-latest}
@@ -123,6 +130,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   nginx:
     image: nginx
@@ -138,6 +146,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
   icecast:
     image: ghcr.io/libretime/icecast:2.4.4
@@ -150,6 +159,7 @@ services:
       TZ: Europe/Brussels
     networks:
       libretime:
+    restart: unless-stopped      
 
 volumes:
   postgres-data:
