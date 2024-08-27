@@ -108,6 +108,7 @@ services:
     volumes:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-storage:/srv/libretime
+      - /srv/media/Musique:/music:ro
     environment:
       TZ: Europe/Brussels
     networks:
