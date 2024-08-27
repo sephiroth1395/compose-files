@@ -55,8 +55,8 @@ services:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-playout:/app
     environment:
-      - LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
-      - TZ: Europe/Brussels
+      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      TZ: Europe/Brussels
     networks:
       libretime:
 
@@ -71,8 +71,8 @@ services:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-storage:/srv/libretime
     environment:
-      - LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
-      - TZ: Europe/Brussels
+      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      TZ: Europe/Brussels
     networks:
       libretime:
 
@@ -86,8 +86,8 @@ services:
     volumes:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
     environment:
-      - LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
-      - TZ: Europe/Brussels
+      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      TZ: Europe/Brussels
     networks:
       libretime:
 
@@ -103,7 +103,7 @@ services:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-storage:/srv/libretime
     environment:
-      - TZ: Europe/Brussels
+      TZ: Europe/Brussels
     networks:
       libretime:
 
@@ -120,7 +120,7 @@ services:
       - libretime-assets:/var/www/html
       - libretime-storage:/srv/libretime
     environment:
-      - TZ: Europe/Brussels
+      TZ: Europe/Brussels
     networks:
       libretime:
 
@@ -135,7 +135,7 @@ services:
       - libretime-storage:/srv/libretime:ro
       - /opt/libretime/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     environment:
-      - TZ: Europe/Brussels
+      TZ: Europe/Brussels
     networks:
       libretime:
 
@@ -144,10 +144,10 @@ services:
     ports:
       - 127.0.0.1:8281:8000/tcp
     environment:
-      - ICECAST_SOURCE_PASSWORD: ${ICECAST_SOURCE_PASSWORD}
-      - ICECAST_ADMIN_PASSWORD: ${ICECAST_ADMIN_PASSWORD}
-      - ICECAST_RELAY_PASSWORD: ${ICECAST_RELAY_PASSWORD}
-      - TZ: Europe/Brussels
+      ICECAST_SOURCE_PASSWORD: ${ICECAST_SOURCE_PASSWORD}
+      ICECAST_ADMIN_PASSWORD: ${ICECAST_ADMIN_PASSWORD}
+      ICECAST_RELAY_PASSWORD: ${ICECAST_RELAY_PASSWORD}
+      TZ: Europe/Brussels
     networks:
       libretime:
 
