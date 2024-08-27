@@ -35,7 +35,7 @@ services:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-playout:/app
     environment:
-      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      LIBRETIME_GENERAL_PUBLIC_URL: http://nginx:8080
       TZ: Europe/Brussels
     networks:
       libretime:
@@ -55,7 +55,7 @@ services:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-playout:/app
     environment:
-      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      LIBRETIME_GENERAL_PUBLIC_URL: http://nginx:8080
       TZ: Europe/Brussels
     networks:
       libretime:
@@ -71,7 +71,7 @@ services:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
       - libretime-storage:/srv/libretime
     environment:
-      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      LIBRETIME_GENERAL_PUBLIC_URL: http://nginx:8080
       TZ: Europe/Brussels
     networks:
       libretime:
@@ -86,7 +86,7 @@ services:
     volumes:
       - /opt/libretime/config.yml:/etc/libretime/config.yml:ro
     environment:
-      LIBRETIME_GENERAL_PUBLIC_URL: ${LIBRETIME_GENERAL_PUBLIC_URL}
+      LIBRETIME_GENERAL_PUBLIC_URL: http://nginx:8080
       TZ: Europe/Brussels
     networks:
       libretime:
