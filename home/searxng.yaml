@@ -9,6 +9,7 @@ services:
       - 127.0.0.1:8087:8080/tcp
     networks:
       searxng:
+      ai-tools:
   morty:
     container_name: morty
     image: dalf/morty
@@ -30,3 +31,5 @@ networks:
     ipam:
       config:
         - subnet: 172.17.41.40/29
+  ai-tools:
+    external: true
