@@ -1,0 +1,24 @@
+services:
+  open-webui:
+    container_name: open-webui
+    image: ghcr.io/open-webui/open-webui:main
+    restart: unless-stopped
+    environment:
+      - OPENAI_API_BASE_URLS=${OPENAI_API_BASE_URLS}
+      - OPENAI_API_KEYS=${OPENAI_API_KEYS}
+    volumes:
+      - open-webui-data:/app/backend/data
+    ports:
+      - 127.0.0.1:8100:8080/tcp
+    networks:
+      ai-tools:
+
+volumes: 
+  open-webui-data:
+
+networks:
+  ai-tools:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.41.48/28
