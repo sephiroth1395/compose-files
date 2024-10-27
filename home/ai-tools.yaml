@@ -6,10 +6,10 @@ services:
     environment:
       - OPENAI_API_BASE_URLS=${OPENAI_API_BASE_URLS}
       - OPENAI_API_KEYS=${OPENAI_API_KEYS}
-      - SSL_CERT_DIR=/etc/ssl/certs
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
     volumes:
       - open-webui-data:/app/backend/data
-      - /etc/ssl/certs:/etc/ssl/certs:ro      
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro      
     ports:
       - 127.0.0.1:8100:8080/tcp
     networks:
