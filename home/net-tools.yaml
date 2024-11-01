@@ -1,0 +1,22 @@
+services:
+  it-tools:
+    image: ghcr.io/corentinth/it-tools:latest
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8250:80/tcp
+    networks:
+      net-tools:
+  cyberchef:
+    image: ghcr.io/gchq/cyberchef:latest
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8251:80/tcp
+    networks:
+      net-tools:
+
+networks:
+  net-tools:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.41.80/28
