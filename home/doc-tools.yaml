@@ -1,0 +1,24 @@
+services:
+  scanservjs:
+    container_name: scanservjs
+    image: sbs20/scanservjs:latest
+    restart: unless-stopped
+    volumes:
+      - scanservjs-sane:/etc/sane.d
+      - /srv/docs/__Scans:/var/lib/scanservjs/output
+      - scanservjs-conf:/etc/scanservjs
+    ports:
+      - 127.0.0.1:8200:8080/tcp
+    networks:
+      doc-tools:
+
+volumes: 
+  scanservjs-sane:
+  scanservjs-conf:
+
+networks:
+  doc-tools:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.41.64/28
