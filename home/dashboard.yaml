@@ -8,6 +8,8 @@ services:
       - homepage-images:/app/public/images
     ports:
       - 127.0.0.1:7575:3000/tcp
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: "home.srv.ev1z.be"      
     networks:
       homepage:
 
