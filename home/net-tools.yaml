@@ -13,6 +13,13 @@ services:
       - 127.0.0.1:8251:80/tcp
     networks:
       net-tools:
+  pswd:
+    image: ghcr.io/remvze/pswd:latest
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8252:8080/tcp
+    networks:
+      net-tools:      
 
 networks:
   net-tools:
