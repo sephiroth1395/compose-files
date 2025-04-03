@@ -123,6 +123,10 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5
+    environment:
+      - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
+      - PMA_HOST=${MARIADB_PDNS_SERVER}
+      - MYSQL_ROOT_PASSWORD=${MARIADB_PDNS_ROOT_PW}
     networks:
       db:
       web:
