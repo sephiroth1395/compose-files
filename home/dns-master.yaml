@@ -46,6 +46,7 @@ services:
       - TZ='Europe/Brussels'    
     volumes:
       - "external-resolver-unbound:/etc/unbound"
+      - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
     working_dir: "/etc/unbound"
 
   pihole:
