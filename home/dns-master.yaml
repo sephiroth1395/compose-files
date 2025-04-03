@@ -111,7 +111,7 @@ services:
     environment:
       - PDNS_ADMIN_SQLA_DB_HOST=${MARIADB_PDNS_SERVER}
       - PDNS_ADMIN_SQLA_DB_PASSWORD=${MARIADB_PDNS_ROOT_PW}
-      - PDNS_API_URL="http://pdns.dns_internal:8081/"
+      - PDNS_API_URL="http://dns-pdns-1.dns_internal:8081/"
       - PDNS_VERSION=4.9
       - PDNS_API_KEY=${PDNS_API_SECRET}
     depends_on:
