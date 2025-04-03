@@ -45,7 +45,6 @@ services:
     environment:
       - TZ='Europe/Brussels'    
     volumes:
-      - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
       - "external-resolver-unbound:/etc/unbound"
     working_dir: "/etc/unbound"
 
