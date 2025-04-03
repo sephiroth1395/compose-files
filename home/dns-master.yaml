@@ -99,6 +99,7 @@ services:
       - PDNS_webserver_allow_from=172.17.44.0/28
       - PDNS_version_string=anonymous
       - PDNS_default_ttl=1500
+      - PDNS_default_soa_content=${PDNS_DEFAULT_SOA}
     depends_on:
       - mariadb-pdns
 
