@@ -1,0 +1,99 @@
+services:
+
+  npm:
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+      - npm-logs:/var/log/nginx
+    networks:
+      - web
+      - public
+
+  bind:
+    environment:
+      - "TZ=Europe/Brussels"
+    hostname: "dns-bind"
+    image: "docker.io/ubuntu/bind9:latest"
+    networks:
+      internal:
+        ipv4_address: 172.17.44.4
+      dns-bind:
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    restart: unless-stopped
+    volumes:
+      - "bind-cache:/var/cache/bind"
+      - "bind-etc:/etc/bind"
+      - "bind-lib:/var/lib/bind"
+
+  external-resolver:
+    image: "docker.io/alpinelinux/unbound:latest"
+    networks:
+      internal:
+        ipv4_address: 172.17.44.2
+      public:
+    restart: unless-stopped
+    volumes:
+      - "/usr/share/dns/root.hints:/etc/unbound/root.hints"
+      - "external-resolver-unbound:/etc/unbound"
+    working_dir: "/etc/unbound"
+
+  pihole:
+    environment:
+      - FTLCONF_webserver_api_password: 'co^pjzEG^}2gSA?WPzLKkTi+Yr$uXMBQ'
+      - TZ: 'Europe/Brussels'
+    image: "pihole/pihole:latest"
+    networks:
+      internal:
+        ipv4_address: 172.17.44.3      
+      public:
+      web:
+    restart: unless-stopped
+    volumes:
+      - "pihole-dnsmasq:/etc/dnsmasq.d"
+      - "pihole-etc:/etc/pihole"
+      - "pihole-lighttpd:/etc/lighttpd"
+
+networks:
+  internal:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.17.44.0/28
+  web:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.17.44.16/28
+  public:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.44.32/28
+  db:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.17.44.48/28
+
+volumes:
+  bind-cache:
+  bind-etc:
+  bind-lib:
+  external-resolver-unbound:
+  pihole-dnsmasq:
+  pihole-etc:
+  pihole-lighttpd:
+  npm-data:
+  npm-letsencrypt:
+  npm-logs:
