@@ -83,6 +83,7 @@ services:
     image: pschiffe/pdns-mysql:${PDNS_MYSQL_TAG:-latest}
     networks:
       internal:
+        ipv4_address: 172.17.44.5
       db:
       web:
     volumes:
@@ -106,6 +107,7 @@ services:
     networks:
       db:
       web:
+      internal:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
