@@ -47,7 +47,7 @@ services:
 
   pihole:
     environment:
-      - FTLCONF_webserver_api_password: 'co^pjzEG^}2gSA?WPzLKkTi+Yr$uXMBQ'
+      - FTLCONF_webserver_api_password: '${PIHOLE_WEB_API_PASSWORD}'
       - TZ: 'Europe/Brussels'
     image: "pihole/pihole:latest"
     networks:
