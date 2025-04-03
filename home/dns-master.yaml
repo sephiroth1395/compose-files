@@ -25,7 +25,7 @@ services:
     networks:
       internal:
         ipv4_address: 172.17.44.4
-      dns-bind:
+      public:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
