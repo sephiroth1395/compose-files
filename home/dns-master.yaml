@@ -65,6 +65,68 @@ services:
       - "pihole-etc:/etc/pihole"
       - "pihole-lighttpd:/etc/lighttpd"
 
+  mariadb-pdns:
+    image: mariadb:11-ubi
+    networks:
+      db:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - mariadb-pdns:/var/lib/mysql:Z
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MARIADB_PDNS_ROOT_PW}
+    healthcheck:
+      test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
+      timeout: 10s
+      retries: 5
+
+  pdns:
+    image: pschiffe/pdns-mysql:${PDNS_MYSQL_TAG:-latest}
+    networks:
+      internal:
+      db:
+      web:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PDNS_gmysql_password=${MARIADB_PDNS_ROOT_PW}
+      - PDNS_primary=yes
+      - PDNS_api=yes
+      - PDNS_api_key=${PDNS_API_SECRET}
+      - PDNS_webserver=yes
+      - PDNS_webserver_address=0.0.0.0
+      - PDNS_webserver_allow_from=172.17.44.16/28
+      - PDNS_version_string=anonymous
+      - PDNS_default_ttl=1500
+    depends_on:
+      - mariadb-pdns
+
+  pdns-admin:
+    image: pschiffe/pdns-admin
+    networks:
+      db:
+      web:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PDNS_ADMIN_SQLA_DB_PASSWORD=${MARIADB_PDNS_ROOT_PW}
+      - PDNS_VERSION=4.9
+      - PDNS_API_KEY=${PDNS_API_SECRET}
+    depends_on:
+      - mariadb-pdns
+      - pdns
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    networks:
+      db:
+      web:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ['CMD', 'curl', '-fsSL', 'http://127.0.0.1:80']
+      timeout: 10s
+      retries: 5
+
 networks:
   internal:
     driver: bridge
@@ -101,3 +163,4 @@ volumes:
   npm-data:
   npm-letsencrypt:
   npm-logs:
+  mariadb-pdns:
