@@ -174,3 +174,6 @@ networks:
     ipam:
       config:
         - subnet: 172.17.42.16/29
+  proxy:
+    name: proxy_internal
+    external: true
