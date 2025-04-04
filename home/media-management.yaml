@@ -116,7 +116,8 @@ services:
       - 127.0.0.1:8686:8686/tcp
     restart: unless-stopped
     networks:
-      download: 
+      download:
+      proxy:
 
   readarr:
     image: lscr.io/linuxserver/readarr:develop
