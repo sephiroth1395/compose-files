@@ -12,8 +12,8 @@ services:
       - DEEMIX_SINGLE_USER=true
       - TZ=Europe/Brussels          
     restart: unless-stopped
-    ports:
-      - 127.0.0.1:6595:6595/tcp
+    #ports:
+    #  - 127.0.0.1:6595:6595/tcp
     networks:
       deemix:
       proxy:

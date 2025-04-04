@@ -3,7 +3,7 @@ services:
   navidrome:
     image: deluan/navidrome:latest
     ports:
-      - 127.0.0.1:4533:4533/tcp
+    #  - 127.0.0.1:4533:4533/tcp
       - 172.16.20.241:9533:4533/tcp   # For Home Assistant direct connection
     restart: unless-stopped
     environment:
