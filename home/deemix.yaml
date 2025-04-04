@@ -16,6 +16,7 @@ services:
       - 127.0.0.1:6595:6595/tcp
     networks:
       deemix:
+      proxy:
 
 volumes: 
   deemix-config:
@@ -26,3 +27,6 @@ networks:
     ipam:
       config:
         - subnet: 172.17.42.24/29  
+  proxy:
+    name: proxy_internal
+    external: true        
