@@ -12,7 +12,7 @@ services:
       - deluge-config:/config
       - /srv/media/Downloads:/downloads
     ports:
-      - 127.0.0.1:8112:8112/tcp
+    #  - 127.0.0.1:8112:8112/tcp
       - 6881:6881
       - 6881:6881/udp
       - 58846:58846 #optional
@@ -30,8 +30,8 @@ services:
       - TZ=Europe/Brussels
     volumes:
       - prowlarr-config:/config
-    ports:
-      - 127.0.0.1:9696:9696/tcp
+    #ports:
+    #  - 127.0.0.1:9696:9696/tcp
     restart: unless-stopped      
     networks:
       download:
@@ -46,8 +46,8 @@ services:
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Europe/Brussels
-    ports:
-      - 127.0.0.1:8191:8191/tcp
+    #ports:
+    #  - 127.0.0.1:8191:8191/tcp
     restart: unless-stopped 
     networks:
       captcha:
@@ -64,8 +64,8 @@ services:
       - mylar-config:/config
       - /srv/media/Comics:/comics
       - /srv/media/Downloads:/downloads
-    ports:
-      - 127.0.0.1:8090:8090/tcp
+    #ports:
+    #  - 127.0.0.1:8090:8090/tcp
     restart: unless-stopped
     networks:
       download:
@@ -82,8 +82,8 @@ services:
       - radarr-config:/config
       - /srv/media/Videos/Movies:/movies
       - /srv/media/Downloads/Complete:/downloads
-    ports:
-      - 127.0.0.1:7878:7878/tcp
+    #ports:
+    #  - 127.0.0.1:7878:7878/tcp
     restart: unless-stopped
     networks:
       download:
@@ -100,8 +100,8 @@ services:
       - sonarr-config:/config
       - /srv/media/Videos/Shows:/tv 
       - /srv/media/Downloads/Complete:/downloads
-    ports:
-      - 127.0.0.1:8989:8989/tcp
+    #ports:
+    #  - 127.0.0.1:8989:8989/tcp
     restart: unless-stopped      
     networks:
       download:
@@ -118,8 +118,8 @@ services:
       - lidarr-config:/config
       - /srv/media/Musique/Tracked:/music
       - /srv/media/Downloads/Complete:/downloads 
-    ports:
-      - 127.0.0.1:8686:8686/tcp
+    #ports:
+    #  - 127.0.0.1:8686:8686/tcp
     restart: unless-stopped
     networks:
       download:
@@ -136,8 +136,8 @@ services:
       - readarr-config:/config
       - /srv/media/eBooks/Tracked:/books 
       - /srv/media/Downloads/Complete:/downloads
-    ports:
-      - 127.0.0.1:8787:8787/tcp
+    #ports:
+    #  - 127.0.0.1:8787:8787/tcp
     restart: unless-stopped
     networks:
       download:
@@ -146,8 +146,8 @@ services:
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
-    ports:
-      - 127.0.0.1:9090:80/tcp
+    #ports:
+    #  - 127.0.0.1:9090:80/tcp
     volumes:
       - /srv/media/Audiobooks:/audiobooks
       - /srv/media/Podcasts:/podcasts
