@@ -16,6 +16,14 @@ services:
     networks:
       - public
       - internal
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    volumes:
+      - homer-config:/www/assets
+    restart: unless-stopped      
+    networks:
+      - internal
 
 networks:
   internal:
@@ -31,3 +39,4 @@ volumes:
   npm-data:
   npm-letsencrypt:
   npm-logs:
+  homer-config:
