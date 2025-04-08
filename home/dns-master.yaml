@@ -152,9 +152,11 @@ networks:
         - subnet: 172.17.44.16/28
   public:
     driver: bridge
+    enable_ipv6: true
     ipam:
       config:
         - subnet: 172.17.44.32/28
+        - subnet: fd00:470:780b:a620:2::/80
   db:
     driver: bridge
     internal: true
