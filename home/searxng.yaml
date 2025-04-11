@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     volumes:
       - searxng-config:/etc/searxng
-    ports:
-      - 127.0.0.1:8087:8080/tcp
+    #ports:
+    #  - 127.0.0.1:8087:8080/tcp
     networks:
       searxng:
       proxy:
@@ -17,8 +17,8 @@ services:
     environment:
       - MORTY_KEY=${MORTY_KEY}
       - MORTY_ADDRESS=0.0.0.0:3000
-    ports:
-      - 127.0.0.1:8090:3000/tcp      
+    #ports:
+    #  - 127.0.0.1:8090:3000/tcp      
     networks:
       searxng:
       proxy:
