@@ -31,9 +31,11 @@ networks:
     external: true
   public:
     driver: bridge
+    enable_ipv6: true
     ipam:
       config:
         - subnet: 172.17.41.176/28
+        - subnet: fd00:470:780b:aa20:3::/80
 
 volumes:
   npm-data:
