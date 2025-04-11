@@ -7,10 +7,11 @@ services:
       - scanservjs-sane:/etc/sane.d
       - /srv/docs/__Scans:/var/lib/scanservjs/output
       - scanservjs-conf:/etc/scanservjs
-    ports:
-      - 127.0.0.1:8200:8080/tcp
+    #ports:
+    #  - 127.0.0.1:8200:8080/tcp
     networks:
       doc-tools:
+      proxy:
 
 volumes: 
   scanservjs-sane:
@@ -22,3 +23,6 @@ networks:
     ipam:
       config:
         - subnet: 172.17.41.64/28
+  proxy:
+    name: proxy_internal
+    external: true            
