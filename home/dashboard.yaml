@@ -12,6 +12,7 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: "home.srv.ev1z.be"      
     networks:
       homepage:
+      proxy:
 
 volumes: 
   homepage-config:
@@ -22,4 +23,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.41.28/30  
+        - subnet: 172.17.41.28/30
+  proxy:
+    name: proxy_internal
+    external: true        
