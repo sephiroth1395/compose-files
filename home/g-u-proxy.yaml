@@ -16,7 +16,6 @@ services:
     networks:
       - public
       - internal
-      - default
   homer:
     image: b4bz/homer
     container_name: homer
@@ -30,9 +29,6 @@ networks:
   internal:
     name: proxy_internal
     external: true
-  default:
-    name: bridge
-    external: true    
   public:
     driver: bridge
     ipam:
