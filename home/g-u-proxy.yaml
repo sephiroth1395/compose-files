@@ -1,0 +1,42 @@
+services:
+
+  npm:
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    environment:
+      - TZ='Europe/Brussels'    
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+      - npm-logs:/var/log/nginx
+    networks:
+      - public
+      - internal
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    volumes:
+      - homer-config:/www/assets
+    restart: unless-stopped      
+    networks:
+      - internal
+
+networks:
+  internal:
+    name: proxy_internal
+    external: true
+  public:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.41.188/30
+
+volumes:
+  npm-data:
+  npm-letsencrypt:
+  npm-logs:
+  homer-config:
