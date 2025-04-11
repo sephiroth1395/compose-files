@@ -9,6 +9,7 @@ services:
       - 127.0.0.1:8087:8080/tcp
     networks:
       searxng:
+      proxy:
   morty:
     container_name: morty
     image: dalf/morty
@@ -20,6 +21,7 @@ services:
       - 127.0.0.1:8090:3000/tcp      
     networks:
       searxng:
+      proxy:
 
 volumes: 
   searxng-config:
@@ -30,3 +32,6 @@ networks:
     ipam:
       config:
         - subnet: 172.17.41.40/29
+  proxy:
+    name: proxy_internal
+    external: true        

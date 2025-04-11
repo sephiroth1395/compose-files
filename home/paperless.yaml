@@ -28,8 +28,8 @@ services:
     depends_on:
       - db
       - broker
-    ports:
-      - 127.0.0.1:8010:8000/tcp
+    #ports:
+    #  - 127.0.0.1:8010:8000/tcp
     volumes:
       - data:/usr/src/paperless/data
       - media:/usr/src/paperless/media
@@ -47,6 +47,7 @@ services:
       PAPERLESS_TASK_WORKERS: ${PAPERLESS_TASK_WORKERS}
     networks:
       net:
+      proxy:
 
 volumes:
   data:
@@ -59,4 +60,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.41.32/29    
+        - subnet: 172.17.41.32/29
+  proxy:
+    name: proxy_internal
+    external: true        

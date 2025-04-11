@@ -2,8 +2,8 @@ services:
   wallos:
     container_name: wallos
     image: bellamy/wallos:latest
-    ports:
-      - 127.0.0.1:8282:80/tcp
+    #ports:
+    #  - 127.0.0.1:8282:80/tcp
     environment:
       TZ: 'Europe/Brussels'
     volumes:
@@ -11,6 +11,7 @@ services:
       - wallos-logos:/var/www/html/images/uploads/logos
     networks:
       everyday-life:
+      proxy:
     restart: unless-stopped
 
 volumes: 
@@ -23,3 +24,6 @@ networks:
     ipam:
       config:
         - subnet: 172.17.41.96/28
+  proxy:
+    name: proxy_internal
+    external: true               
