@@ -26,6 +26,9 @@ services:
       - TZ='Europe/Brussels'
       - DOCKER_ENABLE_SECURITY=false
       - LANGS=en_GB
+    networks:
+      doc-tools:
+      proxy:
 
 
 volumes: 
