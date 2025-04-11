@@ -2,27 +2,31 @@ services:
   it-tools:
     image: ghcr.io/corentinth/it-tools:latest
     restart: unless-stopped
-    #ports:
-    #  - 127.0.0.1:8250:80/tcp
     networks:
       net-tools:
       proxy:
   cyberchef:
     image: ghcr.io/gchq/cyberchef:latest
     restart: unless-stopped
-    #ports:
-    #  - 127.0.0.1:8251:80/tcp
     networks:
       net-tools:
       proxy:
   pswd:
     image: ghcr.io/remvze/pswd:latest
     restart: unless-stopped
-    #ports:
-    #  - 127.0.0.1:8252:8080/tcp
     networks:
       net-tools:      
       proxy:
+  openregex:
+    image: sunnev/openregex
+    restart: unless-stopped
+    environment:
+      OPENREGEX_LOG_LEVEL: ERROR
+      OPENREGEX_TIMEOUT_S: 5
+      GUNICORN_WORKERS: 1
+      GUNICORN_THREADS: 4
+    networks:
+      proxy:      
 
 networks:
   net-tools:
