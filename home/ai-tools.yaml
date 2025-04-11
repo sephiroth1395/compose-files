@@ -10,10 +10,11 @@ services:
     volumes:
       - open-webui-data:/app/backend/data
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro      
-    ports:
-      - 127.0.0.1:8100:8080/tcp
+    #ports:
+    #  - 127.0.0.1:8100:8080/tcp
     networks:
       ai-tools:
+      proxy:
 
 volumes: 
   open-webui-data:
@@ -24,3 +25,6 @@ networks:
     ipam:
       config:
         - subnet: 172.17.41.48/28
+  proxy:
+    name: proxy_internal
+    external: true        
