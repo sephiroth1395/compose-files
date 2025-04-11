@@ -7,11 +7,26 @@ services:
       - scanservjs-sane:/etc/sane.d
       - /srv/docs/__Scans:/var/lib/scanservjs/output
       - scanservjs-conf:/etc/scanservjs
+    environment:
+      - TZ='Europe/Brussels'      
     #ports:
     #  - 127.0.0.1:8200:8080/tcp
     networks:
       doc-tools:
       proxy:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    volumes:
+      - stirling-pdf-training-data:/usr/share/tessdata # Required for extra OCR languages
+      - stirling-pdf-config:/configs
+      - stirling-pdf-custom-files:/customFiles/
+      - stirling-pdf-logs:/logs/
+      - stirling-pdf-pipeline:/pipeline/
+    environment:
+      - TZ='Europe/Brussels'
+      - DOCKER_ENABLE_SECURITY=false
+      - LANGS=en_GB
+
 
 volumes: 
   scanservjs-sane:
