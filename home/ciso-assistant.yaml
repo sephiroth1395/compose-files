@@ -9,7 +9,8 @@ services:
       - CISO_ASSISTANT_URL=https://localhost:8443
       - DJANGO_DEBUG=True
       - AUTH_TOKEN_TTL=7200
-
+    networks:
+      net: 
     volumes:
       - db:/code/db
     healthcheck:
@@ -32,7 +33,6 @@ services:
       - CISO_ASSISTANT_URL=https://localhost:8443
       - DJANGO_DEBUG=False
       - AUTH_TOKEN_TTL=7200
-
     volumes:
       - db:/code/db
     entrypoint:
@@ -40,6 +40,8 @@ services:
       - -c
       - |
         poetry run python manage.py run_huey -w 2 --scheduler-interval 60
+    networks:
+      net: 
 
   frontend:
     container_name: ciso-assistant-frontend
@@ -53,6 +55,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    networks:
+      net: 
 
   caddy:
     container-name: ciso-assistant-caddy
@@ -73,6 +77,9 @@ services:
       reverse_proxy /* frontend:3000
       tls internal
       }" > Caddyfile && caddy run'
+    networks:
+      net: 
+      proxy:
 
 networks:
   net:
