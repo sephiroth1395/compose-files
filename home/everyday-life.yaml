@@ -2,8 +2,6 @@ services:
   wallos:
     container_name: wallos
     image: bellamy/wallos:latest
-    #ports:
-    #  - 127.0.0.1:8282:80/tcp
     environment:
       TZ: 'Europe/Brussels'
     volumes:
@@ -13,10 +11,22 @@ services:
       everyday-life:
       proxy:
     restart: unless-stopped
+  kiwix:
+    command: '"*.zim"'
+    environment:
+      TZ: 'Europe/Brussels'    
+    image: ghcr.io/kiwix/kiwix-serve
+    volumes:
+      - kiwix-data:/data
+    networks:
+      everyday-life:
+      proxy:
+    restart: unless-stopped      
 
 volumes: 
   wallos-db:
   wallos-logos:
+  kiwix-data:
 
 networks:
   everyday-life:
