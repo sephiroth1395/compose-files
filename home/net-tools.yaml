@@ -26,7 +26,13 @@ services:
       GUNICORN_WORKERS: 1
       GUNICORN_THREADS: 4
     networks:
-      proxy:      
+      proxy:
+  omni-tools:
+    image: iib0011/omni-tools:latest
+    container_name: omni-tools
+    restart: unless-stopped
+    networks:
+      proxy:
 
 networks:
   net-tools:
