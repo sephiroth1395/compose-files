@@ -67,6 +67,7 @@ services:
 
   mariadb-pdns:
     image: mariadb:11-ubi
+    restart: unless-stopped
     networks:
       db:
     volumes:
@@ -81,6 +82,7 @@ services:
 
   pdns:
     image: pschiffe/pdns-mysql:${PDNS_MYSQL_TAG:-latest}
+    restart: unless-stopped
     networks:
       internal:
         ipv4_address: 172.17.44.5
@@ -105,6 +107,7 @@ services:
 
   pdns-admin:
     image: pschiffe/pdns-admin
+    restart: unless-stopped
     networks:
       db:
       web:
@@ -123,6 +126,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5
+    restart: unless-stopped
     environment:
       - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
       - PMA_HOST=${MARIADB_PDNS_SERVER}
