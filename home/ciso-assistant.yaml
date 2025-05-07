@@ -5,7 +5,7 @@ services:
     pull_policy: always
     restart: always
     environment:
-      - ALLOWED_HOSTS=ca-backend,localhost,ciso-assistant.srv.ev1z.be
+      - ALLOWED_HOSTS=ciso-assistant-backend.ciso-assistant_net,localhost,ciso-assistant.srv.ev1z.be
       - CISO_ASSISTANT_URL=https://ciso-assistant.srv.ev1z.be
       - DJANGO_DEBUG=False
       - AUTH_TOKEN_TTL=7200
@@ -15,7 +15,7 @@ services:
       net:
       proxy:
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://ciso-assistant-backend:8000/api/build || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://ciso-assistant-backend.ciso-assistant_net:8000/api/build || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 20
