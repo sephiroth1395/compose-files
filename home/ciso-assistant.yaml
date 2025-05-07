@@ -1,27 +1,27 @@
 services:
-  backend:
+  ciso-assistant-backend:
     container_name: ciso-assistant-backend
     image: ghcr.io/intuitem/ciso-assistant-community/backend:latest
     pull_policy: always
     restart: always
     environment:
-      - ALLOWED_HOSTS=backend,localhost
-      - CISO_ASSISTANT_URL=${CISO_ASSISTANT_URL}
-      - DJANGO_DEBUG=True
+      - ALLOWED_HOSTS=ca-backend,localhost,ciso-assistant.srv.ev1z.be
+      - CISO_ASSISTANT_URL=https://ciso-assistant.srv.ev1z.be
+      - DJANGO_DEBUG=False
       - AUTH_TOKEN_TTL=7200
+    volumes:
+      - db:/code/db
     networks:
       net:
       proxy:
-    volumes:
-      - db:/code/db
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://backend.ciso-assistant_net:8000/api/build || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://backend:8000/api/build || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 20
       start_period: 100s
 
-  huey:
+  ciso-assistant-huey:
     container_name: ciso-assistant-huey
     image: ghcr.io/intuitem/ciso-assistant-community/backend:latest
     pull_policy: always
@@ -30,57 +30,35 @@ services:
         condition: service_healthy
     restart: always
     environment:
-      - ALLOWED_HOSTS=backend,localhost
-      - CISO_ASSISTANT_URL=https://localhost:8443
+      - ALLOWED_HOSTS=ciso-assistant-backend,localhost
+      - CISO_ASSISTANT_URL=https://ciso-assistant.srv.ev1z.be
       - DJANGO_DEBUG=False
       - AUTH_TOKEN_TTL=7200
     volumes:
       - db:/code/db
+    networks:
+      net:       
     entrypoint:
       - /bin/sh
       - -c
       - |
         poetry run python manage.py run_huey -w 2 --scheduler-interval 60
-    networks:
-      net: 
 
-  frontend:
+  ciso-assistant-frontend:
     container_name: ciso-assistant-frontend
     environment:
-      - PUBLIC_BACKEND_API_URL=http://backend.ciso-assistant_net:8000/api
-      - PUBLIC_BACKEND_API_EXPOSED_URL=${CISO_ASSISTANT_URL}/api
+      - PUBLIC_BACKEND_API_URL=http://ciso-assistant-backend.ciso-assistant_net:8000/api
+      - PUBLIC_BACKEND_API_EXPOSED_URL=https://ciso-assistant.srv.ev1z.be/api
       - PROTOCOL_HEADER=x-forwarded-proto
       - HOST_HEADER=x-forwarded-host
     image: ghcr.io/intuitem/ciso-assistant-community/frontend:latest
-    pull_policy: always
-    depends_on:
-      backend:
-        condition: service_healthy
     networks:
       net:
-
-#  caddy:
-#    container_name: ciso-assistant-caddy
-#    image: caddy:2.8.4
-#    environment:
-#      - CISO_ASSISTANT_URL=https://localhost:8443
-#    depends_on:
-#      backend:
-#        condition: service_healthy
-#    restart: unless-stopped
-#    ports:
-#      - 8443:8443
-#    volumes:
-#      - caddy-data:/data
-#    command: |
-#      sh -c 'echo $$CISO_ASSISTANT_URL "{
-#      reverse_proxy /api/* backend:8000
-#      reverse_proxy /* frontend:3000
-#      tls internal
-#      }" > Caddyfile && caddy run'
-#    networks:
-#      net: 
-#      proxy:
+      proxy:  
+    pull_policy: always
+    depends_on:
+      ciso-assistant-backend:
+        condition: service_healthy
 
 networks:
   net:
@@ -93,5 +71,4 @@ networks:
     external: true
 
 volumes:
-  caddy-data:
   db:
